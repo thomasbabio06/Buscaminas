@@ -27,6 +27,8 @@ function setup()
   COLOR_CASILLERO_SIN_MINA = color("#1CC932");
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
+  ponerMinaCasillero(0, 0);
+
   // Modificar/completar
 }
 
@@ -34,9 +36,21 @@ function setup()
 function draw() {
   if (hizoClick == true)
   {
-    pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
-
-
+    if (mouseButton == LEFT)
+    {
+      if (tieneMinaCasillero(columnaPresionada, filaPresionada))
+      {
+        perder();
+      }
+      else{
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA);
+        descubrirCasillero(columnaPresionada, filaPresionada);
+      }
+    }
+    if (mouseButton == RIGHT)
+    {
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO);
+    }
     
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
