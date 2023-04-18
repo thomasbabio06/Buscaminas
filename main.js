@@ -41,6 +41,7 @@ function draw() {
     {
       if (tieneMinaCasillero(columnaPresionada, filaPresionada))
       {
+        mostrarMinas();
         perder();
       }
       else{
@@ -64,26 +65,44 @@ function draw() {
 function ganoElJuego()
 {
  if (casillerosSinDescubrir == CANTIDAD_MINAS)
- return true;
+    return true;
 }
 
 function ponerMinasTablero()
 {
-  for (let contador = 0; contador <= 10; contador++){
-    numeroAleatorio = floor(random(0, 100));
-    if (tieneMinaCasillero(numeroAleatorio) == false){
-      ponerMinaCasillero(numeroAleatorio);
-
-    } 
+  for (let contador = 0; contador <= CANTIDAD_MINAS; contador++){
+    rangoX = floor(random(0, 10));
+    rangoY = floor(random(0, 10));
+    while(tieneMinaCasillero(rangoX, rangoY)){
+        rangoX = floor(random(0, 10));
+        rangoY = floor(random(0, 10));
+    }
+    for (let i = 0; i < CANTIDAD_MINAS; i++){
+        ponerMinaCasillero(rangoX, rangoY);
+    }
   } 
 }
 
 function mostrarMinas()
 {
-  // Modificar/completar
+  for (let i = 0; i < 10; i++){
+      for (let j = 0; i < 10; j++){
+          if(tieneMinaCasillero(i, j)){
+            pintarCasillero(i, j, COLOR_CASILLERO_CON_MINA);
+          }
+      }
+  }
 }
 
 function contarMinasAlrededor(columna, fila)
 {
-  return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+  minasT = 0;
+  for (let rangoY = -1 ; rangoY <= 1 ; rangoY++){
+    for (let rangoX = -1 ; rangoX <= -1 ; rangoX++){
+      if (tieneMinaCasillero(columna + rangoX, fila + rangoY)){
+        minasT ++;
+      }
+    }
+  }
+  return minasT;  
 }
