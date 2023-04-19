@@ -22,12 +22,12 @@ function setup()
 {
   createCanvas(500, 500);   //crea un lienzo o panel donde estará el juego. El primer parámetro es el ancho y el segundo el alto del lienzo.
   laMagiaDeLosProfes();
-  
 
   //Asigno colores que se utilizarán. La fn color solo está definida para el setup y el draw
   COLOR_CASILLERO_CON_MINA = color("#FF0000");
   COLOR_CASILLERO_SIN_MINA = color("#1CC932");
   COLOR_CASILLERO_MARCADO = color("#278EF2");
+
   casillerosSinDescubrir = COLUMNAS * FILAS;
 
   // Modificar/completar
@@ -46,9 +46,7 @@ function draw()
       if(tieneMinaCasillero(columnaPresionada, filaPresionada))
       {
         mostrarMinas();
-        perder();
-        
-
+        perder();  
       }
       else
       {
@@ -64,56 +62,47 @@ function draw()
       {
         ganar();
       }
-      
-        
-    
-    
-  
- 
   hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
-  
 }
 
 
 function ganoElJuego()
 {
   if(casillerosSinDescubrir == CANTIDAD_MINAS)
-  return true;
- 
+    return true;
 }
-function ponerMinasTablero()
 
+function ponerMinasTablero()
 {
   
   for (let contador = 0; contador < CANTIDAD_MINAS; contador++){ 
     
-    rangoX = floor(random(0, 10));
-    rangoY = floor(random(0, 10)); 
+    rangoX = floor (random (0, 10));
+    rangoY = floor (random (0, 10)); 
 
-    while(tieneMinaCasillero (rangoX, rangoY))
+    while (tieneMinaCasillero (rangoX, rangoY))
     { 
-      rangoX = floor(random(0, 10));
-      rangoY = floor(random(0, 10)); 
+      rangoX = floor (random (0, 10));
+      rangoY = floor (random (0, 10)); 
     }
     
-    for(let i = 0; i < CANTIDAD_MINAS; i++)
+    for (let i = 0 ; i < CANTIDAD_MINAS ; i++)
     { 
-    ponerMinaCasillero(rangoX, rangoY)
-  }
-    
+    ponerMinaCasillero (rangoX, rangoY)
+    }
   }
 }
 
 function mostrarMinas()
 {
-  for(let i = 0; i < 10; i++)
+  for(let column = 0; column < 10; column++)
   {
-    for(let j = 0; j < 10; j++)
+    for(let fil = 0; fil < 10; fil++)
     {
-      if(tieneMinaCasillero(i, j))
+      if(tieneMinaCasillero(column, fil))
       {
-        pintarCasillero(i, j,  COLOR_CASILLERO_CON_MINA);
+        pintarCasillero(column, fil,  COLOR_CASILLERO_CON_MINA);
       }
     }
   }
@@ -122,7 +111,7 @@ function mostrarMinas()
 
 function contarMinasAlrededor(columna, fila)
 {
-  totalM = 0
+  totalMinas = 0
   for (let rangoX = -1; rangoX <= 1; rangoX++)
   { 
     for (let rangoY = -1; rangoY <= 1; rangoY++)
@@ -130,13 +119,10 @@ function contarMinasAlrededor(columna, fila)
       
       if(tieneMinaCasillero(columna + rangoX, fila + rangoY))
       {
-        totalM++
+        totalMinas++
       }
-     
     }
   }
-
-  return totalM;
-
+  return totalMinas;
 }
 
